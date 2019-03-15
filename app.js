@@ -1,22 +1,23 @@
-const Koa = require('koa2')
-const json = require('koa-json')
-const logger = require('koa-logger')
-const koaRouter = require('koa-router')
-const koaBodyparser = require('koa-bodyparser')
+import Koa from 'koa2'
+import json from 'koa-json'
+import logger from 'koa-logger'
+import koaRouter from 'koa-router'
+import koaBodyparser from 'koa-bodyparser'
 
 const app = new Koa()
 const router = koaRouter()
-app.use(koaBodyparser())
+
 app.use(json())
 app.use(logger())
+app.use(koaBodyparser())
 
 app.use(async (ctx, next) => {
   let start = new Date()
   await next()
   let ms = new Date() - start
-  console.log('%s %s - %s', this.method, this.url, ms) // 显示执行的时间
+  // console.log('%s %s - %s', this.method, this.url, ms) // 显示执行的时间
   ctx.response.type = 'html'
-  ctx.response.body = '<p>This is about page!</p>'
+  ctx.response.body = '<p>This is index page!</p>'
 })
 
 app.on('error', (err, ctx) => {
