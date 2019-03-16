@@ -8,7 +8,7 @@ const dbConfig = {
   dialect: 'mysql'
 }
 
-const sequelize = new Sequelize(
+const Todo = new Sequelize(
   dbConfig.database,
   dbConfig.username,
   dbConfig.password,
@@ -27,4 +27,6 @@ const sequelize = new Sequelize(
   }
 )
 
-module.exports = sequelize
+export default {
+  Todo
+}
