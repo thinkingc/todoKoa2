@@ -48,7 +48,6 @@ const updateTodolist = async function(id, userId, status) {
       }
     }
   )
-  console.log(id, userId, status)
   return result[0] === 1 // 返回一个数组，更新成功的条目为1否则为0。由于只更新一个条目，所以只返回一个元素
 }
 

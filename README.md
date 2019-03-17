@@ -1,7 +1,9 @@
 # todokoa2
 
 > A Vue.js + Koa2 project
+
 > app.js > routes.js > controllers.js > models.js
+
 > app.js 挂载路由 > router.get/post 创建路由 > controllers 负责将数据挂载到响应体中（ctx.body） > models 负责直接操作数据库
 
 ## Build Setup
