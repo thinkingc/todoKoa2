@@ -1,6 +1,6 @@
 import todolist from '../models/todolist.js'
 
-const getTodolist = async function(ctx) {
+const getTodolist = async ctx => {
   const id = ctx.params.id // 获取url里传过来的参数里的id
   const result = await todolist.getTodolistById(id) // 通过await “同步”地返回查询结果
   ctx.body = {
@@ -9,7 +9,7 @@ const getTodolist = async function(ctx) {
   }
 }
 
-const createTodolist = async function(ctx) {
+const createTodolist = async ctx => {
   const data = ctx.request.body
   const success = await todolist.createTodolist(data)
   ctx.body = {
@@ -17,7 +17,7 @@ const createTodolist = async function(ctx) {
   }
 }
 
-const removeTodolist = async function(ctx) {
+const removeTodolist = async ctx => {
   const id = ctx.params.id
   const userId = ctx.params.userId
   const success = await todolist.removeTodolist(id, userId)
@@ -27,7 +27,7 @@ const removeTodolist = async function(ctx) {
   }
 }
 
-const updateTodolist = async function(ctx) {
+const updateTodolist = async ctx => {
   const id = ctx.params.id
   const userId = ctx.params.userId
   let status = ctx.params.status

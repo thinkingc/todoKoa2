@@ -13,6 +13,7 @@ const getUserInfo = async ctx => {
 const postUserAuth = async function(ctx) {
   const data = ctx.request.body // post过来的数据存在request.body里
   const userInfo = await user.getUserByName(data.name)
+
   if (userInfo != null) {
     // 如果查无此用户会返回null
     if (!bcrypt.compareSync(data.password, userInfo.password)) {
@@ -27,6 +28,7 @@ const postUserAuth = async function(ctx) {
       }
       const secret = 'vue-koa-demo' // 指定密钥
       const token = jwt.sign(userToken, secret) // 签发token
+
       ctx.body = {
         success: true,
         token: token // 返回token

@@ -1,11 +1,10 @@
 import db from '../config/db.js' // 引入todolist的表结构
-import { stat } from 'fs'
 const todoModel = '../schema/list.js'
 const TodolistDb = db.Todo // 引入数据库
 
 const Todolist = TodolistDb.import(todoModel)
 
-const getTodolistById = async function(id) {
+const getTodolistById = async id => {
   const todolist = await Todolist.findAll({
     // 查找全部的todolist
     where: {
@@ -17,7 +16,7 @@ const getTodolistById = async function(id) {
   return todolist // 返回数据
 }
 
-const createTodolist = async function(data) {
+const createTodolist = async data => {
   await Todolist.create({
     user_id: data.id,
     content: data.content,
@@ -26,7 +25,7 @@ const createTodolist = async function(data) {
   return true
 }
 
-const removeTodolist = async function(id, userId) {
+const removeTodolist = async (id, userId) => {
   const result = await Todolist.destroy({
     where: {
       id,
@@ -36,7 +35,7 @@ const removeTodolist = async function(id, userId) {
   return result === 1 // 如果成功删除了记录，返回1，否则返回0
 }
 
-const updateTodolist = async function(id, userId, status) {
+const updateTodolist = async (id, userId, status) => {
   const result = await Todolist.update(
     {
       status
