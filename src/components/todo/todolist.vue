@@ -154,7 +154,7 @@ export default {
     },
     getUserInfo () {
       const token = sessionStorage.getItem('demo-token')
-      if (token !== null) {
+      if (token !== null && token !== 'null') {
         let decode = jwt.decode(token)
         return decode
       } else {
