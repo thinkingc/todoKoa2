@@ -1,51 +1,65 @@
 <template>
-  <el-row class="content">
-    <el-col :xs="{span:20,offset:2}" :sm="{span:8,offset:8}">
-      <span>
-        欢迎：{{name}}！你的待办事项是：
-      </span>
-      <el-input placeholder="请输入待办事项" v-model="todos" @keyup.enter.native="addTodos"></el-input>
-      <el-tabs v-model="activeName">
-        <el-tab-pane label="待办事项" name="first">
-          <el-col :xs="24">
-            <template v-if="!Done">
+  <el-container>
+    <el-header>
+      <el-dropdown trigger="hover" class="header-nav">
+        <span class="el-dropdown-link">
+          设置<i class="el-icon-arrow-down el-icon--right"></i>
+        </span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item>我的消息</el-dropdown-item>
+          <el-dropdown-item>设置</el-dropdown-item>
+          <el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+    </el-header>
+    <el-row class="content">
+      <el-col :xs="{span:20,offset:2}" :sm="{span:12,offset:6}">
+        <span>
+          欢迎：{{name}}！你的待办事项是：
+        </span>
+        <el-input placeholder="请输入待办事项" v-model="todos" @keyup.enter.native="addTodos"></el-input>
+        <el-tabs v-model="activeName">
+          <el-tab-pane label="待办事项" name="first">
+            <el-col :xs="24">
+              <template v-if="!Done">
+                <template v-for="(item, index) in list">
+                  <div class="todo-list" v-if="item.status == false" :key="index">
+                    <span class="item no-finished">
+                      {{ index + 1 }}. {{ item.content }}
+                    </span>
+                    <span class="pull-right">
+                      <el-button size="small" class="finish-item" type="primary" @click="update(index)">完成</el-button>
+                      <el-button class="remove-item" size="small" :plain="true" type="danger" @click="remove(index)">删除</el-button>
+                    </span>
+                  </div>
+                </template>
+              </template>
+              <div v-else-if="Done">
+                暂无待办事项
+              </div>
+            </el-col>
+          </el-tab-pane>
+          <el-tab-pane label="已完成事项" name="second">
+            <template v-if="count > 0">
               <template v-for="(item, index) in list">
-                <div class="todo-list" v-if="item.status == false" :key="index">
-                  <span class="item no-finished">
+                <div class="todo-list" v-if="item.status == true" :key="index">
+                  <span class="item finished">
                     {{ index + 1 }}. {{ item.content }}
                   </span>
                   <span class="pull-right">
-                    <el-button size="small" class="finish-item" type="primary" @click="update(index)">完成</el-button>
-                    <el-button class="remove-item" size="small" :plain="true" type="danger" @click="remove(index)">删除</el-button>
+                    <el-button size="small" class="restore-item" type="primary" @click="update(index)">还原</el-button>
                   </span>
                 </div>
               </template>
             </template>
-            <div v-else-if="Done">
-              暂无待办事项
+            <div v-else>
+              暂无已完成事项
             </div>
-          </el-col>
-        </el-tab-pane>
-        <el-tab-pane label="已完成事项" name="second">
-          <template v-if="count > 0">
-            <template v-for="(item, index) in list">
-              <div class="todo-list" v-if="item.status == true" :key="index">
-                <span class="item finished">
-                  {{ index + 1 }}. {{ item.content }}
-                </span>
-                <span class="pull-right">
-                  <el-button size="small" class="restore-item" type="primary" @click="update(index)">还原</el-button>
-                </span>
-              </div>
-            </template>
-          </template>
-          <div v-else>
-            暂无已完成事项
-          </div>
-        </el-tab-pane>
-      </el-tabs>
-    </el-col>
-  </el-row>
+          </el-tab-pane>
+        </el-tabs>
+      </el-col>
+    </el-row>
+  </el-container>
 </template>
 
 <script>
@@ -177,12 +191,23 @@ export default {
         })
 
       return getTodolist
+    },
+    // 退出
+    logout () {
+      sessionStorage.setItem('demo-token', null)
+      this.$router.push('/login')
     }
   }
 }
 </script>
 
 <style lang="stylus" scoped>
+.el-header
+  display flex
+  align-items center
+  justify-content flex-end
+  margin-bottom 20px
+  border-bottom 1px solid #dcdfe6
 .el-input
   margin 20px auto
 .todo-list
