@@ -30,4 +30,6 @@ npm run build --report
 # node app.js || server.js
 ```
 
+> 参考链接：[https://molunerfinn.com/Vue+Koa/?tdsourcetag=s_pctim_aiomsg](https://molunerfinn.com/Vue+Koa/?tdsourcetag=s_pctim_aiomsg)
+
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
